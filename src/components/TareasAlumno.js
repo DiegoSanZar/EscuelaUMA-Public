@@ -25,6 +25,8 @@ function TareasAlumno() {
       <div className="container">
          {
           tarea.map( function(tareaItem,i) {
+
+            
             if(tareaItem.activo){
               if(tareaItem.urlVideo == ""){
                 return <div className="col-12 t-3 mt-3" key={i}>

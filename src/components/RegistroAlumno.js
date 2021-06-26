@@ -1,7 +1,7 @@
 import React from 'react'
 import {creaAlumno} from "../services/alumnoService"
 
-function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
+function RegistroAlumno({value, actualizarInput,actualizarImputUsuario, setValue, manejarSubmit}) {
 
     return (
             <div className="container">
@@ -59,7 +59,7 @@ function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
                             name="email"
                             value={value.email}
                             onChange={(e)=>{actualizarInput(e)}}
-                            pattern="[A-Z a-z 0-9]{1,}@[A-Z a-z]{1,}"
+                            //pattern="[A-Z a-z 0-9]{1,}@[A-Z a-z]{1,}"
                             required
                             />
                     </div>
@@ -96,9 +96,9 @@ function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
                         <input
                             type="text"
                             className="form-control"
-                            name="usuario"
-                            value={value.usuario}
-                            onChange={(e)=>{actualizarInput(e)}}
+                            name="nombreUsuario"
+                            
+                            onChange={(e)=>{actualizarImputUsuario(e)}}
                             />
                     </div>
 
@@ -107,9 +107,8 @@ function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
                         <input
                             type="password"
                             className="form-control"
-                            name="contrasea"
-                            value={value.contrasea}
-                            onChange={(e)=>{actualizarInput(e)}}
+                            name="contrasenia"                            
+                            onChange={(e)=>{actualizarImputUsuario(e)}}
                             />
                     </div>
 

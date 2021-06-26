@@ -42,7 +42,9 @@ function ListarAlumnos(){
                             <td>{alumn.apellidoPaterno}</td>
                             <td>{alumn.apellidoMaterno}</td>
                             <td>{alumn.email}</td>
-                            <td>{alumn.fechaRegistro}</td>
+                            <td>{new Intl.DateTimeFormat('es-ES', 
+                            {year: 'numeric', month: '2-digit',day: '2-digit'})
+                            .format(alumn.fechaRegistro)}</td>
                         </tr>
                     ))}
                 </tbody>

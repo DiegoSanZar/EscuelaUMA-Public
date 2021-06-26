@@ -3,6 +3,7 @@ import RegistroAlumno from "../components/RegistroAlumno"
 import SideBarAdmin from '../components/SideBarAdmin'
 import {useHistory} from "react-router-dom"
 import { creaAlumno } from '../services/alumnoService'
+import { creaUsuario } from '../services/usuarioService'
 import Swal from 'sweetalert2'
 
  
@@ -22,6 +23,13 @@ function RegistroView() {
         instrumento:''
     })
 
+    const [usuarioNuevo, setUsuarioNuevo] = useState({
+        nombreUsuario:'',
+        contrasenia:'',
+        tipo:'1',
+        alumnoId:''
+    })    
+
     const actualizarImput = (e) => {
         setValue({
             ...value,
@@ -29,19 +37,29 @@ function RegistroView() {
         })
     }
 
+    const actualizarImputUsuario = (e) => {
+        setUsuarioNuevo({
+            ...usuarioNuevo,
+            [e.target.name]: e.target.value
+        })
+    }  
+
     const history = useHistory()
 
     const manejarSubmit = async (e) => {
         e.preventDefault()
         try {
-            await creaAlumno({...value})
+            value.fechaRegistro = Date.now()
+            let responseAlumno = await creaAlumno({...value})            
+            usuarioNuevo.alumnoId = responseAlumno.id
+            await creaUsuario({...usuarioNuevo})
             await Swal.fire({
                 icon:'success',
                 title:'Alumno Registrado',
                 showConfirmButton:false,
                 timer:2000
             })
-            history.push("/")
+            history.push("/listarAlumnos")
         }catch(error){
             console.log(error)
         }
@@ -49,7 +67,7 @@ function RegistroView() {
     return (
         <div className="d-flex flex-row"> 
              <SideBarAdmin></SideBarAdmin> 
-            <RegistroAlumno value={value} actualizarInput={actualizarImput} setValue={setValue} manejarSubmit={manejarSubmit}></RegistroAlumno>
+            <RegistroAlumno value={value} actualizarInput={actualizarImput} actualizarImputUsuario={actualizarImputUsuario} setValue={setValue} manejarSubmit={manejarSubmit}></RegistroAlumno>
         </div>
     )
 }

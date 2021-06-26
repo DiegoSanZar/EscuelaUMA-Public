@@ -33,17 +33,18 @@ function MostrarAlumnoView() {
                         <th>Apellido Paterno</th>
                         <th>Apellido Materno</th>
                         <th>Email</th>
-                        <th>Fecha de Registro</th>
+                        <th>Instrumento</th>
                     </tr>
                 </thead>
                 <tbody>
                     {alumnoId.map((alumnId, d) =>(
+                        
                         <tr key={d}>
                             <td>{alumnId.nombre}</td>
                             <td>{alumnId.apellidoPaterno}</td>
                             <td>{alumnId.apellidoMaterno}</td>
                             <td>{alumnId.email}</td>
-                            <td>{alumnId.fechaRegistro}</td>
+                            <td>{alumnId.instrumento}</td>
                         </tr>
                     ))} 
                 </tbody>

@@ -6,6 +6,7 @@ const creaAlumno  = async (nuevoAlumno) => {
     try{
         let headers = {"Content-Type":"application/json"}
         let {data} = await axios.post(URL, nuevoAlumno, {headers} )
+        console.log(data)
         return data
     }catch(error){
         throw error

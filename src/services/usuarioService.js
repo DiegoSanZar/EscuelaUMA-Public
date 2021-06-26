@@ -26,7 +26,21 @@ const loggingUsuario = async(nombreUsuario, contraseniaUsuario) => {
 }
 
 
+const creaUsuario  = async (nuevoUsuario) => {
+    try{
+        let headers = {"Content-Type":"application/json"}
+        let {data} = await axios.post(URL, nuevoUsuario, {headers} )
+        console.log(data)
+        return data
+    }catch(error){
+        throw error
+    }
+}
+
+
+
 
 export {
-    loggingUsuario
+    loggingUsuario,
+    creaUsuario
 }

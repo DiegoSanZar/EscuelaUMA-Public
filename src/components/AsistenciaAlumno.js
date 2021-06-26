@@ -94,12 +94,15 @@ function AsistenciaAlumno(){
                     <tbody>
                     {
                         clases.map( function(claseItem,i) {
+                            let fechaFormato  = new Intl.DateTimeFormat('es-ES', 
+                            {year: 'numeric', month: '2-digit',day: '2-digit'})
+                            .format(claseItem.fechaDictada);
                             
                             if(claseItem.estado == "A"){
                                return <tr className="table-success" key={i}>
                                 <td>
                                     <p className="mb-1 font-weight-bold">
-                                    {claseItem.fechaDictada}
+                                    {fechaFormato}
                                     </p>
                                     <p className="fs-sm text-muted mb-0">
                                     {claseItem.temaDictado}
@@ -120,7 +123,7 @@ function AsistenciaAlumno(){
                                 return <tr className="table-warning" key={i}>
                                     <td>
                                         <p className="mb-1 font-weight-bold">
-                                        {claseItem.fechaDictada}
+                                        {fechaFormato}
                                         </p>
                                         <p className="fs-sm text-muted mb-0">
                                         {claseItem.temaDictado}
