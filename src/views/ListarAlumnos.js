@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import {obtenerAlumnos} from '../services/alumnoService'
+import SideBarAdmin from "../components/SideBarAdmin"
 
 function ListarAlumnos(){
     const[alumnos, setAlumnos] = useState([])
@@ -18,7 +19,11 @@ function ListarAlumnos(){
     }, [])
 
     return (
-        <div>
+        <div className="d-flex flex-row">        
+            <SideBarAdmin></SideBarAdmin>   
+            <div className="container">
+
+            
             <h1>Lista de Alumnos</h1>
             <table className="table">
                 <thead>
@@ -42,6 +47,7 @@ function ListarAlumnos(){
                     ))}
                 </tbody>
             </table>
+            </div>
         </div>
     )
 }

@@ -7,6 +7,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import 'bootstrap/dist/js/bootstrap.bundle.min';
 import "../node_modules/font-awesome/css/font-awesome.min.css"
 import "./estilos.css";
+import "react-big-calendar/lib/css/react-big-calendar.css"
+
 
 
 

@@ -1,8 +1,40 @@
+import {React,useState,useEffect,useContext} from 'react'
 import asistanceClass from "../resources/img/class_assistance.jpg"
 import emptyClass from "../resources/img/empty_class.jpg"
+import {obtenerClasePorAlumno} from "../services/claseService"
+import { AuthContext } from '../context/AuthContext'
 
 
 function AsistenciaAlumno(){
+
+    let { alumnoIdContext } = useContext(AuthContext); 
+    const [clases, setClase] = useState([]);
+    const [numeroAsistencia, setNumeroAsistencia] = useState(0);
+    const [numeroFaltas, setNumerofaltas] = useState(0);
+
+    const getClasesPorAlumno = async() =>{
+        try {
+            let clasesObtenida = await obtenerClasePorAlumno(alumnoIdContext);
+            let numAsistencia = 0;
+            let numFaltas = 0;
+            clasesObtenida.forEach(element => {
+                if(element.estado=="A"){
+                    numAsistencia++;
+                }else{
+                    numFaltas++; 
+                }
+            });    
+            setNumeroAsistencia(numAsistencia)
+            setNumerofaltas(numFaltas)
+            setClase(clasesObtenida);
+            console.log(clasesObtenida);
+          } catch (error) {
+            console.log(error);
+          }
+    }
+    useEffect(()=>{
+        getClasesPorAlumno()
+    },[])
 
     return(
 
@@ -15,7 +47,7 @@ function AsistenciaAlumno(){
                         </div>
                         <div className="col-md-5">
                             <div className="card-body">
-                                <span className="card-title" style={{fontSize:"3rem", fontWeight:"bold"}}>158</span>
+                                <span className="card-title" style={{fontSize:"3rem", fontWeight:"bold"}}>{numeroAsistencia}</span>
                                 <p className="card-text" style={{fontSize:"1.5rem"}}>Asistidos</p>                                
                             </div>
                         </div>
@@ -28,7 +60,7 @@ function AsistenciaAlumno(){
                         </div>
                         <div className="col-md-5">
                             <div className="card-body">
-                                <span className="card-title" style={{fontSize:"3rem", fontWeight:"bold"}}>2</span>
+                                <span className="card-title" style={{fontSize:"3rem", fontWeight:"bold"}}>{numeroFaltas}</span>
                                 <p className="card-text" style={{fontSize:"1.5rem"}}>faltas</p>                                
                             </div>
                         </div>
@@ -40,7 +72,7 @@ function AsistenciaAlumno(){
             <div className="col-12">           
                 <div className="table-responsive mb-7 mb-md-9">
                 <table className="table table-align-middle">
-                    <thead>
+                    <thead>                        
                     <tr>
                         <th>
                         <span className="h6 text-uppercase fw-bold">
@@ -60,46 +92,55 @@ function AsistenciaAlumno(){
                     </tr>
                     </thead>
                     <tbody>
-                    <tr className="table-success">
-                        <td>
-                            <p className="mb-1 font-weight-bold">
-                            15 - 05 2021
-                            </p>
-                            <p className="fs-sm text-muted mb-0">
-                            Clase de Piano, Notas musicales
-                            </p>
-                        </td>
-                        <td>
-                            <p className="fs-sm mb-0">
-                            Walyel Montoya
-                            </p>
-                        </td>
-                        <td className="">                      
-                            <p className="fs-sm mb-0 table-success">
-                            Asistío
-                            </p>
-                        </td>
-                    </tr>
-                    <tr className="table-warning" >
-                        <td>
-                            <p className="mb-1 font-weight-bold">
-                            07 - 05 - 2021
-                            </p>
-                            <p className="fs-sm text-muted mb-0">
-                            Clase de Piano, actividades musicales
-                            </p>
-                        </td>
-                        <td>
-                            <p className="fs-sm mb-0">
-                            Walyel Montoya
-                            </p>
-                        </td>
-                        <td>
-                            <p className="fs-sm mb-0">
-                            Faltó
-                            </p>                      
-                        </td>
-                    </tr>    
+                    {
+                        clases.map( function(claseItem,i) {
+                            
+                            if(claseItem.estado == "A"){
+                               return <tr className="table-success" key={i}>
+                                <td>
+                                    <p className="mb-1 font-weight-bold">
+                                    {claseItem.fechaDictada}
+                                    </p>
+                                    <p className="fs-sm text-muted mb-0">
+                                    {claseItem.temaDictado}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p className="fs-sm mb-0">
+                                    {claseItem.profesor}
+                                    </p>
+                                </td>
+                                <td className="">                      
+                                    <p className="fs-sm mb-0 table-success">
+                                    Asistío
+                                    </p>
+                                </td>
+                            </tr>
+                            } else {
+                                return <tr className="table-warning" key={i}>
+                                    <td>
+                                        <p className="mb-1 font-weight-bold">
+                                        {claseItem.fechaDictada}
+                                        </p>
+                                        <p className="fs-sm text-muted mb-0">
+                                        {claseItem.temaDictado}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p className="fs-sm mb-0">
+                                        {claseItem.profesor}
+                                        </p>
+                                    </td>
+                                    <td>
+                                        <p className="fs-sm mb-0">
+                                        Faltó
+                                        </p>                      
+                                    </td>
+                                </tr>  
+
+                            }    
+                        })
+                    }
                     </tbody>
                 </table>
                 </div>

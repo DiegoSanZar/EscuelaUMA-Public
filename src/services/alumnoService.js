@@ -14,7 +14,7 @@ const creaAlumno  = async (nuevoAlumno) => {
 
 const obtenerAlumnoPorId = async(id) => {
     try{
-        let {data} = await axios.get(`${URL}/${id}`)
+        let {data} = await axios.get(`${URL}/${id}`)        
         return data
     }catch(error){
         console.log(error)
@@ -48,7 +48,7 @@ const loggingAlumno = async(usuario, contrasenia) => {
     try{
         const alumnosObtenidos = obtenerAlumnos()
         alumnosObtenidos.filter((alumno)=>{
-            return alumno.usuario == usuario && alumno.contrasenia == contrasenia
+            return alumno.usuario === usuario && alumno.contrasenia === contrasenia
         })
         return alumnosObtenidos
     }catch(error){

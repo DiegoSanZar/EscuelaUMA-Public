@@ -1,100 +1,119 @@
-import React from 'react'
+import {React,useState,useEffect,useContext} from 'react'
+import {obtenerTareaPorAlumno} from "../services/tareaService"
+import { AuthContext } from '../context/AuthContext'
 
 function TareasAlumno() {
+
+    let { alumnoIdContext } = useContext(AuthContext); 
+    const [tarea, setTarea] = useState([]);
+
+    const getTareasPorAlumno = async() =>{
+        try {
+            let tareaObtenida = await obtenerTareaPorAlumno(alumnoIdContext);
+            setTarea(tareaObtenida);
+            console.log(tarea);
+          } catch (error) {
+            console.log(error);
+          }
+    }
+    useEffect(()=>{
+      getTareasPorAlumno()
+    },[])
 
     return (
 
       <div className="container">
-        <div class="col-12 t-3 mt-3">
-        <div className="card card-row shadow-light-lg mb-6 lift lift-lg " >
-        <div className="row gx-0 mt-3">
-          <div className="col-12 col-md-6 order-md-2 bg-cover card-img-end p-3">
-            <form>              
-              <div class="input-group mb-3">
-                <span class="input-group-text" id="basic-addon3">URL https://ejemplo.com/video/</span>
-                <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" />
+         {
+          tarea.map( function(tareaItem,i) {
+            if(tareaItem.activo){
+              if(tareaItem.urlVideo == ""){
+                return <div className="col-12 t-3 mt-3" key={i}>
+                <div className="card card-row shadow-light-lg mb-6 lift lift-lg " >
+                <div className="row gx-0 mt-3">
+                  <div className="col-12 col-md-6 order-md-2 bg-cover card-img-end p-3">   
+                    <form >              
+                      <div className="input-group mb-3">
+                        <span className="input-group-text" id="basic-addon3">URL https://ejemplo.com/video/</span>
+                        <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3" />
+                      </div>
+                      <div className="input-group mb-3">
+                        <span className="input-group-text">Comentarios</span>
+                        <textarea className="form-control" aria-label="With textarea">                  
+                        </textarea>
+                      </div>
+                      <button type="submit" className="btn btn-primary mb-3">Enviar</button>
+                    </form>
+  
+                  </div>
+                  <div className="card-body col-12 col-md-6 order-md-1" >
+                    <h5 className="card-title">{tareaItem.tareaTitulo} </h5>
+                    <p className="card-text">
+                        {tareaItem.tareaDetalle}
+                    </p>
+                    <div className="p-2 mb-1 bg-warning text-dark" style={{width:"25%"}}>
+                       Pendiente
+                    </div>
+                  </div>          
+                  </div>
+                </div>
+                </div>
+              }else {
+                return <div className="card card-row shadow-light-lg mb-6 lift lift-lg "  key={i}>
+                <div className="row gx-0 mt-3">
+                  <div className="col-12 col-md-6 order-md-2 bg-cover card-img-end p-3">   
+                    <h1>En revisión del profesor</h1>
+  
+                  </div>
+                  <div className="card-body col-12 col-md-6 order-md-1" >
+                    <h5 className="card-title">{tareaItem.tareaTitulo} </h5>
+                    <p className="card-text">
+                        {tareaItem.tareaDetalle}
+                    </p>
+                    <div className="p-2 mb-1 bg-warning text-dark" style={{width:"25%"}}>
+                       Pendiente
+                    </div>
+                  </div>          
+                  </div>
+                </div>                             
+              }
+              
+            }else{
+              return <div className="col-12 t-3 mt-3">
+              <div className="card card-row shadow-light-lg mb-6 lift lift-lg" >
+              <div className="row gx-0 mt-3">
+                <div className="col-12 col-md-6 order-md-2 bg-cover card-img-end">
+                <div className="d-flex flex-row">
+                    <div className="embed-responsive embed-responsive-1by1 p-1">
+                      <iframe className="embed-responsive-item" src={tareaItem.urlVideo}></iframe>
+                    </div>
+                    <div className="input-group p-1">
+                          <span className="input-group-text">
+                              <span>Comentarios</span>                         
+                          </span>
+                          <textarea className="form-control" aria-label="With textarea" defaultValue={tareaItem.comentarioProfesor}>
+                          
+                          </textarea>
+                    </div>
+                </div>
+      
+                </div>
+                <div className="card-body col-12 col-md-6 order-md-1" >
+                  <h5 className="card-title">{tareaItem.tareaTitulo} </h5>
+                  <p className="card-text">
+                  {tareaItem.tareaDetalle}
+                  </p>
+                  
+                  <div className="p-2 mb-1 bg-success text-white" style={{width:"25%"}}>
+                     Completada
+                  </div>
+                </div>          
+                </div>
               </div>
-              <div class="input-group mb-3">
-                <span class="input-group-text">Comentarios</span>
-                <textarea class="form-control" aria-label="With textarea">                  
-                </textarea>
               </div>
-              <button type="submit" class="btn btn-primary mb-3">Enviar</button>
-            </form>
-          </div>
-          <div className="card-body col-12 col-md-6 order-md-1" >
-            <h5 className="card-title">Tarea Session 2 </h5>
-            <p className="card-text">
-              Hola francisco, hoy debes de avanzar lo siguiente en tu evaluacion. 
-
-              Primero tocar toda la pieza de piano de motzar. Luego practicar la lecturas de notas.
-
-
-
-            </p>
-            <div className=" container">
-            
-            <hr className="card-meta-divider"></hr>
-            <div className="avatar avatar-sm me-2">
-                      <img src="assets/img/avatars/avatar-1.jpg" alt="..." className="avatar-img rounded-circle" />
-             </div>
-             <h6 className="text-uppercase text-muted me-2 mb-0">
-                      Walyel Montoya
-                    </h6>
-
-            </div>
-          </div>          
-          </div>
-        </div>
-        </div>
-
-        <div class="col-12 t-3 mt-3">
-        <div className="card card-row shadow-light-lg mb-6 lift lift-lg" >
-        <div className="row gx-0 mt-3 p-3">
-          <div className="col-12 col-md-6 order-md-2 bg-cover card-img-end">
-          <div className="d-flex flex-row">
-              <div class="embed-responsive embed-responsive-1by1 p-1">
-                <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/B0D1G5wvux4"></iframe>
-              </div>
-              <div class="input-group p-1">
-                    <span class="input-group-text">
-                        <span>Comentarios</span>                         
-                    </span>
-                    <textarea class="form-control" aria-label="With textarea" 
-                    value="Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aut vel provident repellendus illo, veniam laborum amet delectus impedit pariatur saepe porro repellat ipsum cupiditate, architecto minima iste itaque in accusamus?">
-                    </textarea>
-              </div>
-          </div>
-
-          </div>
-          <div className="card-body col-12 col-md-6 order-md-1" >
-            <h5 className="card-title">Tarea Session 1 </h5>
-            <p className="card-text">
-              Hola francisco, hoy debes de avanzar lo siguiente en tu evaluacion. 
-
-              Primero tocar toda la pieza de piano de motzar. Luego practicar la lecturas de notas.
-
-
-
-            </p>
-            <div className=" container">
-            
-            <hr className="card-meta-divider"></hr>
-            <div className="avatar avatar-sm me-2">
-                      <img src="assets/img/avatars/avatar-1.jpg" alt="..." className="avatar-img rounded-circle" />
-             </div>
-             <h6 className="text-uppercase text-muted me-2 mb-0">
-                      Walyel Montoya
-                    </h6>
-
-            </div>
-          </div>          
-          </div>
-        </div>
-        </div>
+            }
+          })         
+        }
       </div>
-
-
     )
 
 

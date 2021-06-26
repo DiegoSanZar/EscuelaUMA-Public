@@ -3,25 +3,25 @@ import logo from "../resources/img/uma_logo.jpg";
 import Swal from 'sweetalert2';
 import {useHistory} from "react-router-dom";
 import React, { useContext } from "react";
-import { sideBarContext } from "../context/sideBarContext";
+import { sideBarAdminContext } from "../context/sideBarAdminContext";
 import { AuthContext } from "../context/AuthContext";
 
 
 
 
-function SideBar(){
+function SideBarAdmin(){
 
     
     const history = useHistory()
-    let { sideBarActive } = useContext(sideBarContext);
-    let { actualizarActiveLink } = useContext(sideBarContext);
-    
+    let { sideBarAdminActive } = useContext(sideBarAdminContext);
+    let { actualizarActiveLink } = useContext(sideBarAdminContext);
+
     let { actualizarAuth } = useContext(AuthContext);
-    let { actualizarAlumnoId } = useContext(AuthContext);
+    let { actualizarAlumnoId } = useContext(AuthContext);    
 
 
     const evaluateActiveLink = (actual) => {
-        if(actual == sideBarActive){
+        if(actual == sideBarAdminActive){
             return true;
         }
         return false;
@@ -41,7 +41,7 @@ function SideBar(){
                 }).then((result) => {                
                 if (result.isConfirmed) {
                     actualizarAuth(false)
-                    actualizarAlumnoId("")                    
+                    actualizarAlumnoId("")                      
                     history.push('/')
                 }
                 })
@@ -61,36 +61,22 @@ function SideBar(){
             <hr />
             <ul className="nav nav-pills flex-column mb-auto">
             <li className="nav-item">
-                <Link to="/intranetAlumno" className={`${evaluateActiveLink("intranetAlumno") ? 'nav-link link-dark active':'nav-link link-dark'}`} 
-                onClick={()=> {actualizarActiveLink("intranetAlumno")}}
+                <Link to="/intranetAdmin" className={`${evaluateActiveLink("intranetAdmin") ? 'nav-link link-dark active':'nav-link link-dark'}`} 
+                onClick={()=> {actualizarActiveLink("intranetAdmin")}}
                 >                
                 Inicio
                 </Link>
             </li>
             <li>
-                <Link to="/mostrarAlumno" className={`${evaluateActiveLink("mostrarAlumno") ? 'nav-link link-dark active':'nav-link link-dark'}`} 
-                onClick={()=> {actualizarActiveLink("mostrarAlumno")}}>                
-                Mis datos
+                <Link to="/registro" className={`${evaluateActiveLink("registroAlumno") ? 'nav-link link-dark active':'nav-link link-dark'}`} 
+                onClick={()=> {actualizarActiveLink("registroAlumno")}}>                
+                Registro de Alumnos
                 </Link>
             </li>
             <li>
-                <Link to="/calendario" className={`${evaluateActiveLink("calendario") ? 'nav-link link-dark active':'nav-link link-dark'}`} 
-                onClick={()=> {actualizarActiveLink("calendario")}}>                
-                Calendario clases
-                </Link>
-            </li>
-            <li>
-                <Link to="/tareas" className={`${evaluateActiveLink("tareas") ? 'nav-link link-dark active':'nav-link link-dark'}`} 
-                onClick={()=> {actualizarActiveLink("tareas")}}>    
-                
-                Tareas
-                </Link>
-            </li>
-            <li>
-                <Link to="/asistencia" className={`${evaluateActiveLink("asistencia") ? 'nav-link link-dark active':'nav-link link-dark'}`} 
-                onClick={()=> {actualizarActiveLink("asistencia")}}>  
-                
-                Asistencia
+                <Link to="/listarAlumnos" className={`${evaluateActiveLink("listarAlumnos") ? 'nav-link link-dark active':'nav-link link-dark'}`} 
+                onClick={()=> {actualizarActiveLink("listarAlumnos")}}>                
+                Listado de Alumnos
                 </Link>
             </li>
             </ul>
@@ -114,4 +100,4 @@ function SideBar(){
 
 }
 
-export default SideBar;
+export default SideBarAdmin;

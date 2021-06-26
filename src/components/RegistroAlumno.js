@@ -1,10 +1,8 @@
 import React from 'react'
 import {creaAlumno} from "../services/alumnoService"
 
-
 function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
 
-    
     return (
             <div className="container">
                 <h1 className="text-center">Formulario de Registro</h1>
@@ -19,6 +17,8 @@ function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
                             name="nombre"
                             value={value.nombre}
                             onChange={(e)=>{actualizarInput(e)}}
+                            pattern="[A-Z a-z]+"
+                            required
                             />
                     </div>
 
@@ -31,6 +31,8 @@ function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
                             name="apellidoPaterno"
                             value={value.apellidoPaterno}
                             onChange={(e)=>{actualizarInput(e)}}
+                            pattern="[A-Z a-z]{1,20}"
+                            required
                             />
                     </div>        
 
@@ -43,6 +45,8 @@ function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
                             name="apellidoMaterno"
                             value={value.apellidoMaterno}
                             onChange={(e)=>{actualizarInput(e)}}
+                            pattern="[A-Z a-z]{1,20}"
+                            required
                             />
                     </div>
 
@@ -55,6 +59,8 @@ function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
                             name="email"
                             value={value.email}
                             onChange={(e)=>{actualizarInput(e)}}
+                            pattern="[A-Z a-z 0-9]{1,}@[A-Z a-z]{1,}"
+                            required
                             />
                     </div>
 
@@ -66,6 +72,7 @@ function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
                             name="fechaNacimiento"
                             value={value.fechaNacimiento}
                             onChange={(e)=>{actualizarInput(e)}}
+                            required
                             />
                     </div>
 
@@ -78,6 +85,7 @@ function RegistroAlumno({value, actualizarInput, setValue, manejarSubmit}) {
                             name="nombrePadre"
                             value={value.nombrePadre}
                             onChange={(e)=>{actualizarInput(e)}}
+                            required
                             />
                     </div>
 
