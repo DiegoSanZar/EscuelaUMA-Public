@@ -15,7 +15,8 @@ const obtenerUsuarios = async() => {
 
 const loggingUsuario = async(nombreUsuario, contraseniaUsuario) => {
     try{
-        const usuariosObtenidos = await obtenerUsuarios()
+        let headers = {"Content-Type":"application/json"}
+        let {data} = await axios.post(URL, nuevoUsuario, {headers} )
         return usuariosObtenidos.filter((usuario)=>{
                     return usuario.nombreUsuario === nombreUsuario && usuario.contrasenia === contraseniaUsuario
                 })       
